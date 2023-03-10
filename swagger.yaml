@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: TV show review plantform 
+  title: Swagger Petstore - OpenAPI 3.0
   description: |-
     This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about
     Swagger at [https://swagger.io](https://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!
@@ -25,167 +25,239 @@ externalDocs:
 servers:
   - url: https://petstore3.swagger.io/api/v3
 tags:
-  - name: TVshow
-    description: TVshow
+  - name: Search
+    description: Search this TV show
     externalDocs:
-      description: Find out more about our store
+      description: Find out what this TV show about
       url: http://swagger.io
   - name: user
     description: Operations about user
+  - name: Review
+    description: Review details
+  - name: FriendList
+    description: FriendList for the user
+  - name: WatchList 
+    description:  WatchList for the user  
+  - name: Recommendation 
+    description:  Recommendation for the user  
+  - name: Forum 
+    description:  Forum for the user    
+    
 paths:
  
-  /TVshow/{showId}:
+  /Search/{userId}:
     get:
       tags:
-        - TVshow
-      summary: Returns TVshow short summary
+        - Search
+      summary: Returns TVshow short summary based on showId
       description: Returns a map of status codes to quantities
       operationId: getTVShowSummary
       parameters:
-        - name: pid
+        - name: userId
           in: path
-          description: 'The name that needs to be fetched. Use user1 for testing. '
+          description: 'userId'
           required: true
           schema:
             type: integer
+        - name: showName
+          in: query
+          schema:
+            type: integer
+          description: showName    
+          
+        - name: showId
+          in: query
+          schema:
+            type: integer
+          description: showId 
+          
+        - name: seasonNum
+          in: query
+          description: 'userId'
+          schema:
+            type: integer
+            
+        - name: episodeNum
+          in: query
+          description: 'episodeNum'
+          schema:
+            type: integer
+
       responses:
         '200':
-          description: successful operation
+          description: successful returns TVshow short summary based on showId
           content:
             application/json:
               schema:
                 type: object
-                additionalProperties:
-                  type: integer
-                  format: int32
-      security:
-        - api_key: []
-    post:
-      tags:
-         - TVshow
-      summary: Returns TVshow short summary
-      description: Returns a map of status codes to quantities
-      operationId: postTVShowSummary
-      parameters:
-        - name: pid
-          in: path
-          description: 'The name that needs to be fetched. Use user1 for testing. '
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties:
-                  type: integer
-                  format: int32
-      security:
-        - api_key: []
-        
+                properties:
+                  searchResult:
+                    type: string
+                    description: short summary
 
         
-  /TVshow/{pName}{episodeId}:
+  /Review/{userId}:
     get:
-    
       tags:
-        - TVshow
-      summary: Returns TVshow short summary
+        - Review
+      summary: Returns TVshow short summary based on showId
       description: Returns a map of status codes to quantities
-      operationId: getTVShowEpisodeSummary
+      operationId: getReviews
       parameters:
-        - name: episodeId
+        - name: userId
           in: path
-          description: 'The name that needs to be fetched. Use user1 for testing. '
+          description: 'userId'
           required: true
           schema:
             type: integer
-        - name: pName
-          in: path
-          description: 'The name that needs to be fetched. Use user1 for testing. '
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties:
-                  type: integer
-                  format: int32
-      security:
-        - api_key: []
-    post:
-      tags:
-        - TVshow
-      summary: Returns TVshow short summary
-      description: Returns a map of status codes to quantities
-      operationId: postTVShowEpisodeSummary
-      parameters:
-        - name: episodeId
-          in: path
-          description: 'The name that needs to be fetched. Use user1 for testing. '
-          required: true
+        - name: showName
+          in: query
           schema:
             type: integer
-        - name: pName
-          in: path
-          description: 'The name that needs to be fetched. Use user1 for testing. '
+          description: showName Notice-- either showName or showId is required  
           required: true
+          
+        - name: showId
+          in: query
           schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties:
-                  type: integer
-                  format: int32
-      security:
-        - api_key: []
-    
-  
- 
+            type: integer
+          description: showId. Notice-- either showName or showId is required
+          
+        - name: seasonNum
+          in: query
+          description: 'userId'
+          schema:
+            type: integer
+            
+        - name: episodeNum
+          in: query
+          description: 'episodeNum'
+          schema:
+            type: integer
 
-  /user:
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
     post:
       tags:
-        - user
-      summary: Create user
-      description: This can only be done by the logged in user.
-      operationId: createUser
+        - Review
+      description: Let a user post a new review
+      parameters:
+        - name: userId
+          in: path
+          description: 'userId'
+          required: true
+          schema:
+            type: integer
+        - name: showName
+          in: query
+          schema:
+            type: integer
+          description: showName showName is required  
+          required: true
+          
+        - name: showId
+          in: query
+          schema:
+            type: integer
+          description: showId. Notice-- either showName or showId is required
+          
+        - name: seasonNum
+          in: query
+          description: 'userId'
+          schema:
+            type: integer
+            
+        - name: episodeNum
+          in: query
+          description: 'episodeNum'
+          schema:
+            type: integer
+      
       requestBody:
-        description: Created user object
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/User'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/User'
+              type: object 
+              required:
+                - userId
+              properties:
+                showName:
+                  type: string
+                showGenre:
+                  type: string
+                postTime:
+                  type: integer
+                rating:
+                  type: number
+                reviewContent:
+                  type: string
+
       responses:
-        default:
-          description: successful operation
+        '200':
+          description: Successfully created a new artist
+
+        '400':
+          description: Invalid request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/User'
-
+                type: object
+                properties:   
+                  message:
+                    type: string
+    
+    delete:
+      tags:
+        - Review
+      summary: Delete reviews
+      description: This can only be done by the logged in user.
+      operationId: delete reviews
+      parameters:
+        - name: userId
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          schema:
+            type: string
+        - name: showName
+          in: query
+          schema:
+            type: integer
+          description: showName Notice-- either showName or showId is required  
+          required: true
+          
+        - name: showId
+          in: query
+          schema:
+            type: integer
+          description: showId. Notice-- either showName or showId is required
+          
+        - name: seasonNum
+          in: query
+          description: 'userId'
+          schema:
+            type: integer
+            
+        - name: episodeNum
+          in: query
+          description: 'episodeNum'
+          schema:
+            type: integer
+      responses:
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+ 
   /user/login:
     get:
       tags:
@@ -208,25 +280,10 @@ paths:
             type: string
       responses:
         '200':
-          description: successful operation
-          headers:
-            X-Rate-Limit:
-              description: calls per hour allowed by the user
-              schema:
-                type: integer
-                format: int32
-            X-Expires-After:
-              description: date in UTC when token expires
-              schema:
-                type: string
-                format: date-time
-          content:
-            application/xml:
-              schema:
-                type: string
-            application/json:
-              schema:
-                type: string
+          description: successfully login
+        '404':
+        
+          description: cannot find the user
         '400':
           description: Invalid username/password supplied
   /user/logout:
@@ -238,17 +295,23 @@ paths:
       operationId: logoutUser
       parameters: []
       responses:
-        default:
-          description: successful operation
-  /user/{username}:
+        '200':
+          description: successfully logout
+        '404':
+        
+          description: cannot find the user
+        '400':
+          description: Invalid request
+          
+  /user/{userId}:
     get:
       tags:
         - user
-      summary: Get user by user name
+      summary: Get user by user Id
       description: ''
-      operationId: getUserByName
+      operationId: getUserById
       parameters:
-        - name: username
+        - name: userId
           in: path
           description: 'The name that needs to be fetched. Use user1 for testing. '
           required: true
@@ -256,46 +319,25 @@ paths:
             type: string
       responses:
         '200':
-          description: successful operation
+          description: getUserbyUserId
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'          
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                properties:
+                  userEmail:
+                    type: string
+                    description: get the user's email
+                  userName:
+                    type: string
+                    description: get the user's userName
+         
+  
         '400':
           description: Invalid username supplied
         '404':
           description: User not found
-    put:
-      tags:
-        - user
-      summary: Update user
-      description: This can only be done by the logged in user.
-      operationId: updateUser
-      parameters:
-        - name: username
-          in: path
-          description: name that need to be deleted
-          required: true
-          schema:
-            type: string
-      requestBody:
-        description: Update an existent user in the store
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/User'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/User'
-      responses:
-        default:
-          description: successful operation
+
     delete:
       tags:
         - user
@@ -303,135 +345,428 @@ paths:
       description: This can only be done by the logged in user.
       operationId: deleteUser
       parameters:
-        - name: username
+        - name: userId
           in: path
           description: The name that needs to be deleted
           required: true
           schema:
             type: string
       responses:
+        '200':
+          description: successful delete the user from User DB    
         '400':
           description: Invalid username supplied
         '404':
           description: User not found
-components:
-  schemas:
-    TVshow:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 10
-        petId:
-          type: integer
-          format: int64
-          example: 198772
-        quantity:
-          type: integer
-          format: int32
-          example: 7
-        shipDate:
-          type: string
-          format: date-time
-        status:
-          type: string
-          description: Order Status
-          example: approved
-          enum:
-            - placed
-            - approved
-            - delivered
-        complete:
-          type: boolean
-      xml:
-        name: order
+          
+          
+          
+          
+  /friendList/{userId}:
+    get:
+      tags:
+        - FriendList
+      summary: Get user's friend list by user Id
+      description: ''
+      operationId: getFriendById
+      parameters:
+        - name: userId
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successfully get friendList from userID
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example: ["Tom", "Jerry"]
 
+
+      
+          
+    post:
+      tags:
+        - FriendList
+      summary: add the first friend to friendlist
+      description: ''
+      operationId: addFriendById
+      parameters:
+        - name: userId
+          in: path
+          description: 'Add to users friendList'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successfully get friendList from userID
+
+        '404':
+          description: User doesn't exist
+
+        '400':
+          description: Invalid request cannot add this friend to user's friendList
+
+    put:
+      tags:
+        - FriendList
+      summary: update the friendlist
+      description: ''
+      operationId: updateFriendById
+      parameters:
+        - name: userId
+          in: path
+          description: 'Add to users friendList'
+          required: true
+          schema:
+            type: integer
+
+
+      responses:
+        '200':
+          description: Successfully update user's friendList
+        '404':
+          description: User doesn't exist
+
+        '400':
+          description:  Invalid request, cannot add this friend to user's friendList
+  
+          
+          
+          
+  /Recommendation/{userId}:
+    get:
+      tags:
+        - Recommendation
+      summary: Get user's Recommendation list by user Id
+      description: ''
+      operationId: getRecommendationById
+      parameters:
+        - name: userId
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successfully get recommendation from userID
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example: ["show1", "show2", "show3"]
+        '404':
+          description: User doesn't exist
+        '400':
+          description: Invalid request
+    post:
+      tags:
+        - Recommendation
+      summary: add a Recommendation to RecommendationList
+      description: ''
+      operationId: addRecommendationById
+      parameters:
+        - name: userId
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          schema:
+            type: integer
+        - name: showName
+          in: query
+          description: 'Add it to users Recommendation List'
+          schema:
+            type: string
+        - name: showId
+          in: query
+          description: 'Add it to users Recommendation List'
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object 
+              required:
+                - showName
+              properties:
+                showName:
+                  type: string
+
+      responses:
+        '200':
+          description: Successfully update user's RecommendationList
+
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+        '404':
+          description: User doesn't exist
+    put:
+      tags:
+        - Recommendation
+      summary: update the RecommendationList
+      description: ''
+      operationId: updateRecommendationById
+      parameters:
+        - name: userId
+          in: path
+          description: 'Add to users Recommendation List'
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object 
+              required:
+                - showName 
+              properties:
+                showName:
+                  type: string
+
+      responses:
+        '200':
+          description: Successfully update user's RecommendationList
+                  
+        '404':
+          description: User doesn't exist
+
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+                    
+                    
+                    
+  /WatchList/{userId}:
+    get:
+      tags:
+        - WatchList
+      summary: get watchList
+      description: ''
+      operationId: getMovieById
+      parameters:
+        - name: userId
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successfully get watchList from userID
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example: ["show1", "show2", "show3"]
+        '404':
+          description: User doesn't exist
+        '400':
+          description: Invalid request to get the watch List
+          
+    post:
+      tags:
+        - WatchList
+      summary: Add to users WatchList
+      description: ''
+      operationId: addShowListById
+      parameters:
+        - name: userId
+          in: path
+          description: 'Add to users WatchList'
+          required: true
+          schema:
+            type: integer
+        - name: showName
+          in: query
+          description: 'Add showName to users WatchList'
+          schema:
+            type: string
+        - name: showId
+          in: query
+          description: 'Add showId to users WatchList'
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successfully add a show to  watchList from userID
+        '404':
+          description: User doesn't exist
+        '400':
+          description: Invalid request to add a show
+    put:
+      tags:
+        - WatchList
+      summary: Update users WatchList
+      description: ''
+      operationId: updateMovieListById
+      parameters:
+        - name: userId
+          in: path
+          description: 'Add to users WatchList'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description:  successfully update watchList of a user
+        '404':
+          description: User doesn't exist
+        '400':
+          description: Invalid request to update a show
+          
+  /Forum/:
+    get:
+      tags:
+        - Forum
+      summary: Get group by group Id
+      description: ''
+      operationId: getGroupById
+      parameters:
+        - name: GroupId
+          in: query
+          description: "specify the Forum by groupId"
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successfully get group from group Id
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example: ["group1", "group2", "group3"]
+        '404':
+          description: group Id doesn't exist
+        '400':
+          description: Invalid request
+          
+  /Forum/{genre}:
+    get:
+      tags:
+        - Forum
+      summary: Get a list of groups by genre
+      description: ''
+      operationId: getGroupByGenre
+      parameters:
+        - name: genre
+          in: path
+          description: "specify the Forum by Genre"
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successfully get group based on genre
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                example: ["romaticGroup", "comedyGroup"]
+          
+        '404':
+          description: genre doesn't exist
+        '400':
+          description: Invalid request
+          
+  /Forum/{groupId}/{userId}:     
+    post:
+      tags:
+        - Forum
+      summary: Add to user to  a group
+      description: ''
+      operationId: addToGroupById
+      parameters:
+        - name: userId
+          in: path
+          description: 'userId'
+          required: true
+          schema:
+            type: integer
+        - name: groupId
+          in: path
+          description: 'groupId'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successfully add to user to a group
+        '404':
+          description: User doesn't exist
+
+
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:   
+                  message:
+                    type: string
+
+    delete:
+      tags:
+        - Forum
+      summary: Delete user from this group
+      description: This can only be done by the logged in user.
+      operationId: deleteUserFromGroup
+      parameters:
+        - name: userId
+          in: path
+          description: 'userId'
+          required: true
+          schema:
+            type: integer
+        - name: groupId
+          in: path
+          description: 'groupId'
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation    
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
     
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 10
-        username:
-          type: string
-          example: theUser
-        firstName:
-          type: string
-          example: John
-        lastName:
-          type: string
-          example: James
-        email:
-          type: string
-          example: john@email.com
-        password:
-          type: string
-          example: '12345'
-        phone:
-          type: string
-          example: '12345'
-        userStatus:
-          type: integer
-          description: User Status
-          format: int32
-          example: 1
-      xml:
-        name: user
-    Tag:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-      xml:
-        name: tag
-
- 
-    ApiResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        type:
-          type: string
-        message:
-          type: string
-      xml:
-        name: '##default'
-  requestBodies:
-    Pet:
-      description: Pet object that needs to be added to the store
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Pet'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Pet'
-    UserArray:
-      description: List of user object
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/User'
-  securitySchemes:
-    petstore_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
-          scopes:
-            write:pets: modify pets in your account
-            read:pets: read your pets
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
+  
+  
+          
+          
+          
