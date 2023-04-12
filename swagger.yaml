@@ -375,8 +375,24 @@ paths:
               schema:
                 type: array
                 items:
-                  type: string
-                example: ["Tom", "Jerry"]
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the friend
+                    id:
+                      type: integer
+                      description: The ID of the friend
+                example:
+                  - name: Tom
+                    id: 123
+                  - name: Jerry
+                    id: 456
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+                
 
 
       
@@ -453,8 +469,20 @@ paths:
               schema:
                 type: array
                 items:
-                  type: string
-                example: ["show1", "show2", "show3"]
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the recommendation
+                    id:
+                      type: integer
+                      description: The ID of the recommendation
+                example:
+                  - name: moive1name
+                    id: 123
+                  - name: movie2Name
+                    id: 456
+                
         '404':
           description: User doesn't exist
         '400':
@@ -569,19 +597,25 @@ paths:
             type: integer
       responses:
         '200':
-          description: successfully get watchList from userID
+          description: successfully get recommendation from userID
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  type: string
-                example: ["show1", "show2", "show3"]
-        '404':
-          description: User doesn't exist
-        '400':
-          description: Invalid request to get the watch List
-          
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the movies in the watchList
+                    id:
+                      type: integer
+                      description: The ID ofthe movies in the watchList
+                example:
+                  - name: moive1name
+                    id: 123
+                  - name: movie2Name
+                    id: 456
     post:
       tags:
         - WatchList
@@ -655,14 +689,23 @@ paths:
               schema:
                 type: array
                 items:
-                  type: string
-                example: ["group1", "group2", "group3"]
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: the name of the group
+                    id:
+                      type: integer
+                      description: the id of the group
+                      
+             
+              
         '404':
           description: group Id doesn't exist
         '400':
           description: Invalid request
           
-  /Forum/{genre}:
+  /Forum/genres/{genre}:
     get:
       tags:
         - Forum
@@ -684,15 +727,22 @@ paths:
               schema:
                 type: array
                 items:
-                  type: string
-                example: ["romaticGroup", "comedyGroup"]
+                  type: object
+                  properties:
+                    name: 
+                      type: string
+                      description: name of the group
+                    type:
+                      type: string
+                      description: the type of the genre
+                
           
         '404':
           description: genre doesn't exist
         '400':
           description: Invalid request
           
-  /Forum/{groupId}/{userId}:     
+  /Forum/groups/{groupId}/users/{userId}:   
     post:
       tags:
         - Forum
